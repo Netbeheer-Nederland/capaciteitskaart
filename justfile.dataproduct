@@ -1,12 +1,11 @@
 set shell := ["bash", "-uc"]
-ref_name := shell("git rev-parse --abbrev-ref HEAD")
 name := shell("grep -Po '(?<=name: ).*$' model/*.linkml.yml | tr -d '\n' | tr '-' '_'")
 site_title := shell("grep -Po '(?<=title: ).*$' model/*.linkml.yml | tr -d '\n'")
 
 _default:
     @just --list --unsorted --justfile {{justfile()}}
 
-# Generate documentation
+# Generate documentation (assumes generated artifacts)
 [group("generators")]
 generate-documentation: (_clean "output")
     @echo "Generating documentation…"
@@ -76,13 +75,14 @@ generate-json-schema: (_clean "model/{{name}}.json_schema.json")
     @echo "Generated JSON Schema at: model/{{name}}.json_schema.json"
     @echo
 
-# Validate example data
+# Validate example data (assumes generated JSON Schema)
 [group("project")]
-validate-example-data: generate-json-schema
+validate-example-data:
     @echo "Validating example data against JSON schema…"
     @echo
+    mkdir -p /tmp/{{name}}/examples
     for example in examples/*.yml; do \
-        example_json=/tmp/{{name}}/examples/${example%.*}.json; \
+        example_json=/tmp/{{name}}/${example%.*}.json; \
         gen-linkml-profile  \
             convert \
             "$example" \
@@ -99,21 +99,35 @@ serve:
 
 # Release new major version
 [group("version-control")]
-release-major-version: && generate-documentation #validate-example-data
-    @echo "Releasing new major version…"
-    @echo
-    just build
-    git add && git commit
-    git tag v1.0
-    gh workflow run deploy.yml --ref {{ref_name}}
-    @echo "… OK."
-    @echo
+release-major-version: #generate-documentation validate-example-data
+    #!/bin/env bash
+    git fetch && git fetch --tags
+
+    latest_major=$(git tag -l | grep -P '^\d+\.\d+$' | cut -d . -f 1 | sort -n | tail -1)
+    if [ -z "$latest_major" ]; then
+        git tag 1.0;
+    else
+        git tag $(echo $latest_major + 1 | bc).0;
+    fi
+
+    echo "… OK."
+    echo
 
 # Release new minor version
 [group("version-control")]
 release-minor-version:
-    @echo "Releasing new minor version…"
-    @echo
-    gh workflow run release_minor_version.yml --ref {{ref_name}}
-    @echo "… OK."
-    @echo
+    #!/bin/env bash
+    git fetch && git fetch --tags
+
+    latest_version=$(git tag -l | grep -P '^\d+\.\d+$' | sort -t . -k 1,1n -k 2,2n | tail -1)
+    if [ -z "$latest_version" ]; then
+        git tag 1.0;
+    else
+        latest_major=$(echo $latest_version | cut -d . -f 1);
+        latest_minor=$(echo $latest_version | cut -d . -f 2);
+        new_minor=$(echo $latest_minor + 1 | bc);
+        git tag $latest_major.$new_minor;
+    fi
+
+    echo "… OK."
+    echo
