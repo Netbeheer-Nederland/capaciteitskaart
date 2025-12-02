@@ -110,6 +110,8 @@ release-major-version: #generate-documentation validate-example-data
         git tag $(echo $latest_major + 1 | bc).0;
     fi
 
+    git push --tags
+
     echo "… OK."
     echo
 
@@ -128,6 +130,8 @@ release-minor-version:
         new_minor=$(echo $latest_minor + 1 | bc);
         git tag $latest_major.$new_minor;
     fi
+
+    git push --tags
 
     echo "… OK."
     echo
