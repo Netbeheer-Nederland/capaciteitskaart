@@ -1,5 +1,5 @@
 id: https://modellen.netbeheernederland.nl/capaciteitskaart/2.1
-version: 2.1
+version: '2.1'
 name: capaciteitskaart
 description: |-
   Information models for the Capaciteitskaart.
