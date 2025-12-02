@@ -22,7 +22,7 @@ generate-documentation: (_clean "output")
         "output/adoc/modules/schema" \
         "--relations-diagrams"
     @echo "Adding schema documentation to nav…"
-    echo -e "nav:\n- modules/schema/nav.adoc" >> output/adoc/antora.yml
+    yq -i '.nav += ["modules/schema/nav.adoc"]' output/adoc/antora.yml
     @echo
     @echo -e "Copying generated artifacts to schema documentation…"
     @for model in model/*; do \
