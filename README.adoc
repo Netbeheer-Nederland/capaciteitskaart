@@ -1,0 +1,3 @@
+= Capaciteitskaart
+
+Datamodel voor het dataproduct _Capaciteitskaart_..
