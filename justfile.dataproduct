@@ -24,16 +24,19 @@ generate-documentation: (_clean "output")
     @echo "Adding schema documentation to nav…"
     echo -e "nav:\n- modules/schema/nav.adoc" >> output/adoc/antora.yml
     @echo
-    @echo -e "Copying artifacts to schema documentation…"
+    @echo -e "Copying generated artifacts to schema documentation…"
     @for model in model/*; do \
         cp -r $model output/adoc/modules/schema/attachments/; \
-        echo -e "To reference use:\n\txref:schema:attachment$"${model#model/}; \
+        echo -e "To reference use:\n\txref:schema:attachment$"${model#model/}"[]"; \
     done
+    @echo -e "Copy examples (JSON) to schema documentation…"
     for example in examples/*.yml; do \
+        example_name=$(basename $example); \
         gen-linkml-profile  \
             convert \
             "$example" \
-            --out "modules/schema/examples/${example%.*}.json"; \
+            --out "output/adoc/modules/schema/attachments/${example_name%.*}.json"; \
+        echo -e "To reference use:\n\txref:schema:attachment\$${example_name%.*}.json[]"; \
     done
     @echo
     @echo "Generating site using Antora…"
@@ -59,24 +62,6 @@ _clean path:
     @echo "… OK."
     @echo
 
-# Generate example data
-[group("generators")]
-generate-example-data:
-    @echo "Generating JSON example data…"
-    @echo
-    mkdir -p "output/examples"
-    for example_file in examples/*.yml; do \
-        [ -f "$example_file" ] || continue; \
-        gen-linkml-profile  \
-            convert \
-            "$example_file" \
-            --out "output/${example_file%.*}.json"; \
-    done
-    @echo "… OK."
-    @echo
-    @echo -e "Generated example JSON data at: output/examples"
-    @echo
-
 # Generate JSON Schema
 [group("generators")]
 generate-json-schema: (_clean "model/{{name}}.json_schema.json")
@@ -93,7 +78,7 @@ generate-json-schema: (_clean "model/{{name}}.json_schema.json")
 
 # Validate example data
 [group("project")]
-validate-example-data: generate-json-schema generate-example-data
+validate-example-data: generate-json-schema
     @echo "Validating example data against JSON schema…"
     @echo
     for example in examples/*.yml; do \
