@@ -12,7 +12,7 @@ permissions:
   pages: write
   id-token: write
 env:
-  JUST_JUSTFILE: /justfile.dataproduct
+  JUST_JUSTFILE: /opt/data-products/justfile
   IN_DEVCONTAINER: false
 jobs:
   build:
@@ -27,8 +27,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v3
-      #- name: Generate site
-      #  run: antora --fetch /antora-playbook.yml
       - name: Git config
         run: git config --global safe.directory '*'
       - name: Generate site
