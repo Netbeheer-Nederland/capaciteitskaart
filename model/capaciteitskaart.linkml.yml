@@ -1,5 +1,5 @@
-id: https://modellen.netbeheernederland.nl/capaciteitskaart/2.0
-version: '2.0'
+id: https://modellen.netbeheernederland.nl/capaciteitskaart/1.0
+version: '1.0'
 name: capaciteitskaart
 description: |-
   Information models for the Capaciteitskaart.
@@ -17,8 +17,10 @@ prefixes:
   nl: http://iec.ch/TC57/CIM100-Netherlands#
   owl: http://www.w3.org/2002/07/owl#
   skos: http://www.w3.org/2004/02/skos/core#
-  this: http://data.netbeheernederland.nl/dp-capaciteitskaart/def#
+  vocab: https://modellen.netbeheernederland.nl/capaciteitskaart/def#
   unit: http://qudt.org/vocab/unit/
+annotations:
+  vocabulary_prefix: vocab
 types:
   MegaW:
     typeof: float
@@ -33,57 +35,57 @@ enums:
   EnergyAreaKind:
     description: Kind of EnergyAdea. Defines the energy area as a regular
       energy area, or congestion area.
-    enum_uri: this:EnergyAreaKind
+    enum_uri: vocab:EnergyAreaKind
     permissible_values:
       energy_area:
         description: Energy area.
-        meaning: this:EnergyAreaKind.energyArea
+        meaning: vocab:EnergyAreaKind.energyArea
       congestion_area:
         description: Congestion area.
-        meaning: this:EnergyAreaKind.congestionArea
+        meaning: vocab:EnergyAreaKind.congestionArea
   UpdateInfoKind:
     description: Type of information that has been updated as part of this
       dataset.
-    enum_uri: this:UpdateInfoKind
+    enum_uri: vocab:UpdateInfoKind
     permissible_values:
       KI:
         description: Kleurinformatie.
-        meaning: this:UpdateInfoKind.KI
+        meaning: vocab:UpdateInfoKind.KI
       ATC:
         description: Aanwezige transportcapaciteit.
-        meaning: this:UpdateInfoKind.ATC
+        meaning: vocab:UpdateInfoKind.ATC
       BTC:
         description: Benodigde transportcapaciteit.
-        meaning: this:UpdateInfoKind.BTC
+        meaning: vocab:UpdateInfoKind.BTC
       WR:
         description: Wachtrij.
-        meaning: this:UpdateInfoKind.WR
+        meaning: vocab:UpdateInfoKind.WR
       NU:
         description: Netuitbreidingen.
-        meaning: this:UpdateInfoKind.NU
+        meaning: vocab:UpdateInfoKind.NU
       JC:
         description: Jaartal congestie opgelost.
-        meaning: this:UpdateInfoKind.JC
+        meaning: vocab:UpdateInfoKind.JC
   RAGKind:
     description: Traffic light colors coding scheme for categorising status.
-    enum_uri: this:RAGKind
+    enum_uri: vocab:RAGKind
     permissible_values:
       transparant:
         description: Transport capacity is available, without queue ("Transportcapaciteit
           beschikbaar zonder wachtrij").
-        meaning: this:RAGKind.Transparant
+        meaning: vocab:RAGKind.Transparant
       red:
         description: Shortage of transport capacity, with queue (Tekort aan Transportcapaciteit
           met wachtrij).
-        meaning: this:RAGKind.Red
+        meaning: vocab:RAGKind.Red
       amber:
         description: Energy Area is being investigated, with queue (Voedingsgebied
           is in onderzoek met wachtrij).
-        meaning: this:RAGKind.Amber
+        meaning: vocab:RAGKind.Amber
       yellow:
         description: Limited availability of transport capacity, without queue (Transportcapaciteit
           beperkt beschikbaar zonder wachtrij).
-        meaning: this:RAGKind.Yellow
+        meaning: vocab:RAGKind.Yellow
   WorkStatusKind:
     description: Kind of status, specific to work.
     from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61968
@@ -145,18 +147,18 @@ classes:
         required: true
       updated:
         description: Type of information that was updated for this dataset.
-        slot_uri: this:HeatmapDataSet.updated
+        slot_uri: vocab:HeatmapDataSet.updated
         range: UpdateInfo
         required: false
         multivalued: true
       geographical_regions:
         description: All instances of GeographicalRegions
-        slot_uri: this:HeatmapDataSet.GeographicalRegions
+        slot_uri: vocab:HeatmapDataSet.GeographicalRegions
         range: GeographicalRegion
         multivalued: true
         required: true
         inlined_as_list: true
-    class_uri: this:HeatmapDataSet
+    class_uri: vocab:HeatmapDataSet
     tree_root: true
   GeographicalRegion:
     description: "A geographical region of a power system network model."
@@ -196,59 +198,59 @@ classes:
       short_code:
         description: Short code name for EnergyArea. This is the "Uniek ID voedingsgebied"
           in the previous implementation.
-        slot_uri: this:EnergyArea.shortCode
+        slot_uri: vocab:EnergyArea.shortCode
         required: true
         multivalued: false
       type:
         description: Type of EnergyArea, either a regular energy area, or
           congestion area. Only the TSO dataset can define congestion areas.
-        slot_uri: this:EnergyArea.type
+        slot_uri: vocab:EnergyArea.type
         range: EnergyAreaKind
         required: false
         multivalued: false
       demand_alleviation_year:
         description: Year (e.g. "2028") from which any capacity issues have been alleviated
           for the EnergyArea.
-        slot_uri: this:EnergyArea.demandAlleviationYear
+        slot_uri: vocab:EnergyArea.demandAlleviationYear
         range: integer
         required: false
         multivalued: false
       demand_energy_area_short_code:
         description: Reference to a TenneT EnergyArea which is defined as a
           congestion area. Used specifically in the TSO dataset.
-        slot_uri: this:EnergyArea.demandEnergyAreaShortCode
+        slot_uri: vocab:EnergyArea.demandEnergyAreaShortCode
         range: string
         required: false
         multivalued: false
       generation_alleviation_year:
         description: Year (e.g. "2028") from which any capacity issues have been alleviated
           for the EnergyArea.
-        slot_uri: this:EnergyArea.generationAlleviationYear
+        slot_uri: vocab:EnergyArea.generationAlleviationYear
         range: integer
         required: false
         multivalued: false
       generation_energy_area_short_code:
         description: Reference to a TenneT EnergyArea which is defined as a
           congestion area. Used specifically in the TSO dataset.
-        slot_uri: this:EnergyArea.generationEnergyAreaShortCode
+        slot_uri: vocab:EnergyArea.generationEnergyAreaShortCode
         range: string
         required: false
         multivalued: false
       works:
         description: All the works performed for this EnergyArea.
-        slot_uri: this:EnergyArea.Works
+        slot_uri: vocab:EnergyArea.Works
         multivalued: true
         range: Work
         required: false
       area_capacity:
         description:
-        slot_uri: this:EnergyArea.AreaCapacity
+        slot_uri: vocab:EnergyArea.AreaCapacity
         multivalued: true
         range: AreaCapacity
         required: true
       postcode_areas:
         description: Postcode Areas serviced by this EnergyArea.
-        slot_uri: this:EnergyArea.PostcodeAreas
+        slot_uri: vocab:EnergyArea.PostcodeAreas
         multivalued: true
         range: PostcodeArea
         required: false
@@ -256,16 +258,16 @@ classes:
         description: URL for additional (congestion) information for this
           EnergyArea. Only use this attribute if only one URL is required.
           Otherwise, add more congestion information using
-          this:EnergyArea.CongestionInfo.
+          vocab:EnergyArea.CongestionInfo.
         range: string
-        slot_uri: this:EnergyArea.congestionURL
+        slot_uri: vocab:EnergyArea.congestionURL
         required: false
         multivalued: false
       congestion_info:
         description: Additional (congestion) information for this EnergyArea.
           Use this to add multiple documentation and/or descriptions.
         range: CongestionInfo
-        slot_uri: this:EnergyArea.CongestionInfo
+        slot_uri: vocab:EnergyArea.CongestionInfo
         required: false
         multivalued: true
     class_uri: cim:EnergyArea
@@ -284,11 +286,11 @@ classes:
       congestion_url:
         description: URL for additional (congestion) information for this
           EnergyArea.
-        slot_uri: this:CongestionInfo.congestionURL
+        slot_uri: vocab:CongestionInfo.congestionURL
         range: string
         required: false
         multivalued: false
-    class_uri: this:CongestionInfo
+    class_uri: vocab:CongestionInfo
   AreaCapacity:
     description: Capacity information for a specific EnergyArea.
     is_a: IdentifiedObject
@@ -296,7 +298,7 @@ classes:
       capacity_interval:
         description: Capacity information date and time interval. Allows
           providing multiple points in time to provide capacity information.
-        slot_uri: this:AreaCapacity.capacity_interval
+        slot_uri: vocab:AreaCapacity.capacity_interval
         range: DateTimeInterval
         required: true
         multivalued: false
@@ -305,7 +307,7 @@ classes:
           capacity increases in queue. This is the "Aantal unieke
           transportverzoeken in een wachtrij - afname" in the previous
           implementation.
-        slot_uri: this:EnergyArea.demandRequestsInQueue
+        slot_uri: vocab:EnergyArea.demandRequestsInQueue
         range: integer
         required: false
         multivalued: false
@@ -314,7 +316,7 @@ classes:
         description: The contract value of demand requests not yet granted.
           This is the "Wachtrij in capaciteit - afname" in the previous
           implementation, or "Nodig voor aanvragen in de huidige wachtrij".
-        slot_uri: this:EnergyArea.demandCapacityInQueue
+        slot_uri: vocab:EnergyArea.demandCapacityInQueue
         range: MegaW
         required: false
         multivalued: false
@@ -324,7 +326,7 @@ classes:
           EnergyArea. This is the "Benodigde transportcapaciteit (in MW)
           afname" in the previous implementation, or "Nodig voor bestaande
           overeenkomsten en maatschappelijke reserve".
-        slot_uri: this:EnergyArea.demandQuotedCapacity
+        slot_uri: vocab:EnergyArea.demandQuotedCapacity
         range: MegaW
         required: false
         multivalued: false
@@ -335,7 +337,7 @@ classes:
           available to a connecting party. This is the "Aanwezige
           transportcapaciteit (in MW) afname huidige jaar" in the previous
           implementation, or "Aanwezige transportcapaciteit".
-        slot_uri: this:EnergyArea.demandAvailableCapacity
+        slot_uri: vocab:EnergyArea.demandAvailableCapacity
         range: MegaW
         required: false
         multivalued: false
@@ -346,14 +348,14 @@ classes:
         description: Sum of all demand (in MW) forecast for the current year at
           the EnergyArea, or "Nodig voor nog niet aangevraagde capaciteit,
           waarmee wel rekening wordt gehouden door de netbeheerder".
-        slot_uri: this:EnergyArea.demandForecastCapacity
+        slot_uri: vocab:EnergyArea.demandForecastCapacity
         range: MegaW
         required: false
         multivalued: false
         minimum_value: 0
       demand_tso_limit:
         description: TSO EnergyArea limit for demand (in MW).
-        slot_uri: this:EnergyArea.demandTSOLimit
+        slot_uri: vocab:EnergyArea.demandTSOLimit
         range: MegaW
         required: false
         multivalued: false
@@ -363,7 +365,7 @@ classes:
           A utility should provide details on how this RAG status is calculated as
           part of the accompanying documentation. Only specify this attribute if no
           PostcodeArea-s are provided.
-        slot_uri: this:EnergyArea.demandConstraint
+        slot_uri: vocab:EnergyArea.demandConstraint
         range: RAGKind
         required: false
         multivalued: false
@@ -371,7 +373,7 @@ classes:
         description: Number of generation requests for new grid connections and capacity
           increases in queue. This is the "Aantal unieke transportverzoeken in een
           wachtrij - invoeding" in the previous implementation.
-        slot_uri: this:EnergyArea.generationRequestsInQueue
+        slot_uri: vocab:EnergyArea.generationRequestsInQueue
         range: integer
         required: false
         multivalued: false
@@ -380,7 +382,7 @@ classes:
         description: The contract value of generation requests not yet granted.
           This is the "Wachtrij in capaciteit - invoeding" in the previous
           implementation, or "Nodig voor aanvragen in de wachtrij".
-        slot_uri: this:EnergyArea.generationCapacityInQueue
+        slot_uri: vocab:EnergyArea.generationCapacityInQueue
         range: MegaW
         required: false
         multivalued: false
@@ -390,7 +392,7 @@ classes:
           EnergyArea.  This is the "Benodigde transportcapaciteit (in MW)
           invoeding" in the previous implementation, or "Nodig voor bestaande
           overeenkomsten en maatschappelijke reserve".
-        slot_uri: this:EnergyArea.generationQuotedCapacity
+        slot_uri: vocab:EnergyArea.generationQuotedCapacity
         range: MegaW
         required: false
         multivalued: false
@@ -399,7 +401,7 @@ classes:
         description: Available generation capacity (in MW) at the EnergyArea. This
           is the "Aanwezige transportcapaciteit (in MW) invoeding huidige jaar" in
           the previous implementation, or "Aanwezige transportcapaciteit".
-        slot_uri: this:EnergyArea.generationAvailableCapacity
+        slot_uri: vocab:EnergyArea.generationAvailableCapacity
         range: MegaW
         required: false
         multivalued: false
@@ -410,14 +412,14 @@ classes:
         description: Sum of all forecast generation (in MW) for the current
           year at the EnergyArea, or "Nodig voor nog niet aangevraagde
           capaciteit, waarmee wel rekening wordt gehouden door netbeheerder".
-        slot_uri: this:EnergyArea.generationForecastCapacity
+        slot_uri: vocab:EnergyArea.generationForecastCapacity
         range: MegaW
         required: false
         multivalued: false
         minimum_value: 0
       generation_tso_limit:
         description: TSO EnergyArea limit for generation (in MW).
-        slot_uri: this:EnergyArea.generationTSOLimit
+        slot_uri: vocab:EnergyArea.generationTSOLimit
         range: MegaW
         required: false
         multivalued: false
@@ -427,11 +429,11 @@ classes:
           A utility should provide details on how this RAG status is calculated as
           part of the accompanying documentation. Only specify this attribute if no
           PostcodeArea-s are provided.
-        slot_uri: this:EnergyArea.generationConstraint
+        slot_uri: vocab:EnergyArea.generationConstraint
         range: RAGKind
         required: false
         multivalued: false
-    class_uri: this:AreaCapacity
+    class_uri: vocab:AreaCapacity
   PostcodeArea:
     description: A geographic region that is defined by the initial letters or digits
       of a postcode.
@@ -441,14 +443,14 @@ classes:
         description: Identifier for the postcode area. Contain four (4) numbers, followed
           by two (2) letters, uppercase. No spaces between the numbers and letters,
           i.e. "1234AB".
-        slot_uri: this:PostcodeArea.postcode
+        slot_uri: vocab:PostcodeArea.postcode
         required: true
         multivalued: false
       substation_short_code:
         description: TenneT substation ("Onderstation") which feeds this
           PostcodeArea. Use the "ck.EnergyArea.short_code" from the TenneT
           dataset to relate the PostcodeArea.
-        slot_uri: this:PostcodeArea.substationShortCode
+        slot_uri: vocab:PostcodeArea.substationShortCode
         required: false
         multivalued: false
       demand_constraint:
@@ -456,7 +458,7 @@ classes:
           A utility should provide details on how this RAG status is calculated as
           part of the accompanying documentation. This is the "Kleurcodering van het
           postcodegebied voor afname" in the previous implementation.
-        slot_uri: this:PostcodeArea.demandConstraint
+        slot_uri: vocab:PostcodeArea.demandConstraint
         range: RAGKind
         required: true
         multivalued: false
@@ -465,11 +467,11 @@ classes:
           A utility should provide details on how this RAG status is calculated as
           part of the accompanying documentation. This is the "Kleurcodering van het
           postcodegebied voor opwek" in the previous implementation.
-        slot_uri: this:PostcodeArea.generationConstraint
+        slot_uri: vocab:PostcodeArea.generationConstraint
         range: RAGKind
         required: true
         multivalued: false
-    class_uri: this:PostcodeArea
+    class_uri: vocab:PostcodeArea
   Work:
     description: Document used to request, initiate, track and record work. Use the
       "description" attribute to add additional information about this "Work". This
@@ -480,7 +482,7 @@ classes:
       project_name:
         description: Name of the project this work belongs to. This is the "Projectnaam"
           in the previous implementation.
-        slot_uri: this:Work.projectName
+        slot_uri: vocab:Work.projectName
         range: string
         required: true
         multivalued: false
@@ -488,14 +490,14 @@ classes:
         description: URL to the project web page or portal where the project
           information can be found.
         range: string
-        slot_uri: this:Work.projectURL
+        slot_uri: vocab:Work.projectURL
         required: false
         multivalued: false
       source:
         description: Source of the project information. Usually an investment
           plan or scheduled work.
         range: string
-        slot_uri: this:Work.source
+        slot_uri: vocab:Work.source
         required: false
         multivalued: false
     class_uri: cim:Work
@@ -579,8 +581,8 @@ classes:
         multivalued: false
       quarter:
         description: Quarter indicator for when this Work is completed. Use in
-          combination with this:DateTimeInterval.year.
-        slot_uri: this:DateTimeInterval.quarter
+          combination with vocab:DateTimeInterval.year.
+        slot_uri: vocab:DateTimeInterval.quarter
         range: integer
         minimum_value: 1
         maximum_value: 4
@@ -588,8 +590,8 @@ classes:
         multivalued: false
       year:
         description: Year indicator for when this Work is completed. Use in
-          combination with this:DateTimeInterval.quarter.
-        slot_uri: this:DateTimeInterval.year
+          combination with vocab:DateTimeInterval.quarter.
+        slot_uri: vocab:DateTimeInterval.year
         range: integer
         required: false
         multivalued: false
@@ -606,11 +608,11 @@ classes:
         multivalued: false
       type:
         description: Type of the update.
-        slot_uri: this:UpdateInfo.type
+        slot_uri: vocab:UpdateInfo.type
         range: UpdateInfoKind
         required: true
         multivalued: false
-    class_uri: this:UpdateInfo
+    class_uri: vocab:UpdateInfo
   IdentifiedObject:
     description: This is a root class to provide common identification for all classes
       needing identification and naming attributes.
