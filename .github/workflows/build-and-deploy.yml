@@ -1,6 +1,5 @@
 name: Build and deploy
 on:
-  workflow_dispatch:
   workflow_call:
 defaults:
   run:
