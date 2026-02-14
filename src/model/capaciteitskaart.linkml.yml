@@ -12,8 +12,7 @@ prefixes:
   cim: https://cim.ucaiug.io/ns#
   dct: http://purl.org/dc/terms/
   github: https://github.com/
-  liander: http://data.liander.nl/markt/def#
-  nbnl: https://begrippen.netbeheernederland.nl/energiesysteembeheer/nl/page/
+  nbnl-term: https://begrippen.netbeheernederland.nl/id/
   nl: http://iec.ch/TC57/CIM100-Netherlands#
   owl: http://www.w3.org/2002/07/owl#
   skos: http://www.w3.org/2004/02/skos/core#
@@ -21,6 +20,10 @@ prefixes:
   unit: http://qudt.org/vocab/unit/
 annotations:
   vocabulary_prefix: vocab
+  additional_schemas: >-
+    json-schema
+    shacl
+  type: data-product
 types:
   MegaW:
     typeof: float
@@ -192,7 +195,7 @@ classes:
       can be linked to both measured and forecast load levels.
     from_schema: https://cim.ucaiug.io/ns#TC57CIM.IEC61970.Base.LoadModel
     exact_mappings:
-    - nbnl:voedingsgebied
+    - nbnl-term:8eytm
     is_a: IdentifiedObject
     attributes:
       short_code:
@@ -343,7 +346,7 @@ classes:
         multivalued: false
         minimum_value: 0
         exact_mappings:
-          - nbnl:aanwezige-transportcapaciteit
+          - nbnl-term:2whwi
       demand_forecast_capacity:
         description: Sum of all demand (in MW) forecast for the current year at
           the EnergyArea, or "Nodig voor nog niet aangevraagde capaciteit,
@@ -407,7 +410,7 @@ classes:
         multivalued: false
         minimum_value: 0
         exact_mappings:
-          - nbnl:aanwezige-transportcapaciteit
+          - nbnl-term:2whwi
       generation_forecast_capacity:
         description: Sum of all forecast generation (in MW) for the current
           year at the EnergyArea, or "Nodig voor nog niet aangevraagde

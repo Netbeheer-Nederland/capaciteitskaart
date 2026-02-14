@@ -1,0 +1,24 @@
+name: Publish to GitHub Pages
+on:
+  workflow_dispatch:
+  workflow_call:
+defaults:
+  run:
+    shell: bash
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/netbeheer-nederland/dataproducten:latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    uses: netbeheer-nederland/dataproducten/.github/workflows/publish.yml@main
+
