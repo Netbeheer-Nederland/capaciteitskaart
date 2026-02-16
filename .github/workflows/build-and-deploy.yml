@@ -1,9 +1,9 @@
 name: Build and deploy
 on:
   workflow_dispatch:
-defaults:
-  run:
-    shell: bash
+# defaults:
+#   run:
+#     shell: bash
 permissions:
   contents: write
   pages: write
