@@ -177,6 +177,7 @@ License`, under ©Crown copyright 2024.
 
 == Additional artifacts
 
+* xref:schema:attachment$capaciteitskaart.linkml.yml[LinkML schema] (normative)
 * xref:schema:attachment$capaciteitskaart.json_schema.json[JSON schema]
 * xref:schema:attachment$capaciteitskaart_dso.example.json[Example DSO instance data]
 * xref:schema:attachment$capaciteitskaart_tso.example.json[Example TSO instance data]
