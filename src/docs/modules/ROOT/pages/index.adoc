@@ -1,0 +1,3 @@
+= Capaciteitskaart
+
+Information model of data product Capaciteitskaart

@@ -1,0 +1,7 @@
+# Changes here will be overwritten by Copier
+_commit: '0.2'
+_src_path: gh:Netbeheer-Nederland/template-dp
+description: Information model of data product Capaciteitskaart
+exchange_format: JSON
+name: capaciteitskaart
+title: Capaciteitskaart
