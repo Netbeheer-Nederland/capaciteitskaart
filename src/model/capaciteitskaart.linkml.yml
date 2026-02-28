@@ -13,7 +13,7 @@ prefixes:
   nbnl: https://begrippen.netbeheernederland.nl/id/
   nl: http://iec.ch/TC57/CIM100-Netherlands#
   owl: http://www.w3.org/2002/07/owl#
-  this: http://data.netbeheernederland.nl/dp-capaciteitskaart/def#
+  this: http://data.netbeheernederland.nl/capaciteitskaart/def#
   unit: http://qudt.org/vocab/unit/
 annotations:
   model_uri: https://modellen.netbeheernederland.nl/capaciteitskaart
